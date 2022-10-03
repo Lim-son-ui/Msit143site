@@ -6,3 +6,118 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@section abc{
+    <style>
+        h1 {
+            color: green;
+        }
+    </style>
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">welcome</h1>
+    <ul id="ul1">
+        @*<li>aaaa</li>
+        <li>bbbbb</li>
+        <li>ccccc</li>*@
+    </ul>
+    <p>learn about</p>
+</div>
+
+@section script{
+    <script>
+/*const { data } = require("jquery")*/
+
+        //console.log($('display-4').text());
+        //console.log("hello json");
+
+
+
+        //var emps = [{ "name": "Tom", "workYears": 3, "salary": 35000 },
+        //{ "name": "Jack", "workYears": 5, "salary": 40000 },
+        //    { "name": "Mary", "workYears": 7, "salary": 45000 }];
+
+
+        //for (let i = 0, max = emps.length; i < max; i++) {
+        //    console.log(emps[i].name);
+        //    console.log(emps[i].workYears);
+        //    console.log(emps[i].salary);
+        //}
+//---------------------------------------------------------------------
+
+        //var emp = {
+        //    "employees": [
+        //        { "name": "Tom", "workYears": 3, "salary": 35000 },
+        //        { "name": "Jack", "workYears": 5, "salary": 40000 },
+        //        { "name": "Mary", "workYears": 7, "salary": 45000 }
+        //    ]
+        //};
+
+        //const theU1 = document.querySelector("#ul1")
+        //const docFrag = document.createDocumentFragment()
+
+        //for (let i = 0; i < emp.employees.length; i++) {
+        //    //console.log(emp.employees[i].name);
+        //    //console.log(emp.employees[i].workYears);
+        //    //console.log(emp.employees[i].salary);
+
+
+        //    const { name, workYears, salary } = emp.employees[i]
+        //    const txtLi = document.createTextNode(name)
+        //    /*const txtLi = document.createTextNode(emp.employees[i].name)*/
+        //    const eleLi = document.createElement("li")
+        //    eleLi.appendChild(txtLi)
+
+        //    docFrag.appendChild(eleLi);
+        //}
+        //theU1.appendChild(docFrag)
+
+//---------------------------------------------------------------------
+
+        const DATAS = [{
+            "InfoId": "1482",
+            "TYWebsite": "https://travel.tycg.gov.tw/zh-tw/Travel/Attraction/1482",
+            "Name": "中壢光影電影館(光影一館)",
+            "Toldescribe": "透過主題選片、影人映後座談，帶你看遍世界、吸收滿滿藝術能量，逢週六還有親子電影院，全家大小一同無料觀影，開心樂無限！",
+            "Add": "320 桃園市中壢區龍清街116巷31號",
+            "Zipcode": "320",
+            "Opentime": "2022/1/15起開館時間改為週二-日 13:00-21:00 (週一休館)​",
+            "Px": "121.23781",
+            "Py": "24.93551",
+            "Website": "http://www.taoyuan.arts-cinema.com/",
+            "Parkinginfo": "路邊停車",
+            "Ticketinfo": "免費",
+            "Remarks": "",
+            "Tel": "886-3-2841866",
+            "Fax": "886-3-3357832",
+            "Changetime": "2022/01/14 16:48:18"
+        }]
+
+
+        const theU1 = document.querySelector("#ul1")
+        const docFrag = document.createDocumentFragment()
+
+        for (let i = 0; i < DATAS.length; i++) {
+            //console.log(emp.employees[i].name);
+            //console.log(emp.employees[i].workYears);
+            //console.log(emp.employees[i].salary);
+
+
+            const { InfoId,Name,Website,Tel } = DATAS[i]
+            const txtLi = document.createTextNode(InfoId + "      " + Name + "     " + Website + "     " + Tel)
+            const eleLi = document.createElement("li")
+
+            eleLi.appendChild(txtLi)
+           
+            /*const txtLi = document.createTextNode(emp.employees[i].name)*/
+            
+           
+
+            docFrag.appendChild(eleLi);
+        }
+        theU1.appendChild(docFrag)
+    </script>
+
+}

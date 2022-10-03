@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "First";
+}
+
+<h1>First</h1>
+@section abc{ 
+
+}
+
+<h1>first ajax</h1>
+<div id="div1"></div>
+@section script{ 
+    <script>
+        const theDiv = document.querySelector("#div1")
+        const xhr = new XMLHttpRequest()
+
+        xhr.addEventListener("load", () => {
+            const data = xhr.responseText
+
+            theDiv.innerHTML = `<h3>${data}</h3>`
+        })
+
+        xhr.open("GET", "/api/index")
+        xhr.send()
+    </script>
+}
