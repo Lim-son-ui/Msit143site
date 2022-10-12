@@ -13,6 +13,8 @@ namespace Msit143site.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -37,6 +39,58 @@ namespace Msit143site.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult getdemo() {
+            return View();
+        }
+
+        public IActionResult ajaxevent()
+        {
+            return View();
+        }
+
+        public IActionResult Register() {
+            return View();
+        }
+
+        public IActionResult Address()
+        {
+            return View();
+        }
+
+        public IActionResult Promise()
+        {
+            return View();
+        }
+
+        public IActionResult Fetch()
+        {
+            return View();
+        }
+
+        public IActionResult History() {
+            return View();
+        }
+
+        public IActionResult AutoComplete()
+        {
+            return View();
+        }
+
+        public IActionResult jQuery()
+        {
+            return View();
+        }
+
+        public IActionResult Partial()
+        {
+            return PartialView();
+        }
+
+        public IActionResult ShipperCors()
+        {
+            return View();
         }
     }
 }

@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Msit143site.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,19 @@ namespace Msit143site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddControllersWithViews();
+            services.AddDbContext<DemoContext>(
+                options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("DemoConnection"));
+                }
+            );
+
+            services.AddDbContext<NorthwindContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("NorthwindConnection"));
+            });
+
             services.AddControllersWithViews();
         }
 

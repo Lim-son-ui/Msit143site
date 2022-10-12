@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "getdemo";
+}
+
+<h1>getdemo</h1>
+
+<input type="text" id="textbox1" /><button id="button1">click</button>
+<div class="alert alert-primary" role="alert" id="div1"></div>
+
+@section script{
+    <script>
+
+        const btn = document.querySelector("#button1")
+        const txtbox = document.querySelector("#textbox1")
+        const thediv = document.querySelector("#div1")
+
+        btn.addEventListener("click", () => {
+            console.log(txtbox.value)
+
+            const xhr = new XMLHttpRequest();
+            const url = "@Url.Content("~/api/index")"
+            const params = `?keyword=${txtbox.value}`
+
+            xhr.open("GET", url+params)
+           /* xhr.open("GET", `/api/index?keyword = ${txtbox.value}`)*/
+            xhr.send()
+
+            xhr.addEventListener("load", () => {
+                const data = xhr.responseText
+                thediv.textContent = data
+            })
+        })
+
+
+
+    </script>
+}
+        

@@ -21,7 +21,9 @@
             theDiv.innerHTML = `<h3>${data}</h3>`
         })
 
-        xhr.open("GET", "/api/index")
+
+        xhr.open("GET", "@Url.Content("~/api/index")")
+        /*xhr.open("GET", "/api/index")*/
         xhr.send()
     </script>
 }

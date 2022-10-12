@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "ajaxevent";
+}
+
+
+@section abc{ 
+<style>
+    #img1{
+        display:none;
+
+    }
+</style>
+
+}
+
+
+
+<h1>ajaxevent</h1>
+<button class="btn btn-primary m-1" id="buttonstart">start</button>
+<button class="btn btn-danger m-1" id="buttonstop">stop</button>
+<img src="~/images/Plant.gif" id="img1" />
+<div class="alert alert-primary" role="alert" id="div1"></div>
+
+@section script{ 
+<script>
+    const btnstart = document.querySelector("#buttonstart")
+    const btnstop = document.querySelector("#buttonstop")
+    const imgLoading = document.querySelector("#img1")
+    const divMessage = document.querySelector("#div1")
+    const xhr = new XMLHttpRequest()
+
+    btnstop.addEventListener("click", () => {
+        xhr.abort()
+    })
+
+    btnstart.addEventListener("click", () => {
+       
+
+        xhr.addEventListener("load",()=> {
+            const data = xhr.responseText
+            console.log("load")
+        })
+
+        xhr.addEventListener("loadstart", () => {
+            console.log("ajax開始")
+            btnstart.textContent = "loading....."
+            btnstart.setAttribute("disabled", "disabled")
+            imgLoading.style.display = "inline"
+        })
+
+        xhr.addEventListener("loadend", () => {
+            console.log("ajax結束")
+            btnstart.textContent = "start"
+            btnstart.removeAttribute("disabled")
+            imgLoading.style.display = "none"
+        })
+
+        xhr.addEventListener("timeout", () => {
+            console.log("timeout")
+            divMessage.textContent = "伺服器忙碌中"
+        })
+
+        xhr.addEventListener("abort", () => {
+            console.log("abort")
+            divMessage.textContent = "您停止了ajax的執行"
+        })
+
+        xhr.open("GET","@Url.Content("~/api/sleep")")
+        /*xhr.open("GET", "/api/sleep")*/
+        xhr.timeout = 3000
+        xhr.send()
+    })
+
+</script>
+
+}
