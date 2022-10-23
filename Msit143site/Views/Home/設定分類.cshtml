@@ -1,0 +1,149 @@
+﻿@{
+    ViewData["Title"] = "設定分類";
+}
+
+
+<button id="buttonAdd" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal">
+    <i class="fas fa-plus-square"></i>
+</button>
+<table id="customizecategory" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>順序id</th>
+            @*<th>商品數</th>*@
+            <th>類別名稱</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+ Modal
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Customizecategory <span></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <input type="hidden" name="CustomizedCategoryID" id="CustomizedCategoryID">
+                    <div class="form-group">
+                        <label for="CustomizedCategoryName">CustomizedCategoryName</label>
+                        <input type="text" class="form-control" id="CustomizedCategoryName" name="CustomizedCategoryName"
+                               placeholder="類別名稱">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-primary" id="buttonSend">送出</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script>
+        const url = "https://localhost:44373/api/CustomizedCategorys"
+        load()
+
+        //讀取資料
+        function load() {
+            const tbCustomizecategory = $('#customizecategory>tbody')
+            $.getJSON(url, function (datas) {
+                const docFrag = $(document.createDocumentFragment())
+                $.each(datas, function (index, Customizecategory) {
+                    const cell1 = $('<td></td>').text(Customizecategory.CustomizedCategoryID);
+                    const cell2 = $('<td></td>').text(Customizecategory.CustomizedCategoryName);
+                    /*const cell3 = $('<td></td>').text(shipper.phone);*/
+                    const cell4 = $('<td></td>').html('<button class="btn btn-secondary mr-3" data-toggle="modal" data-target="#addModal"><i class="fas fa-pen-nib"></i></button><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>')
+
+                    const row = $('<tr></tr>').append([cell1, cell2,cell4])
+                    docFrag.append(row)
+                })
+                tbCustomizecategory.html(docFrag)
+            })
+        }
+
+        $('#buttonSend').click(function () {
+            //隱藏欄位中有shipperID 的資料我們就是要做修改
+            const id = $('#CustomizedCategoryID').val()
+            if (id) {
+                //資料修改
+                const jsonData = JSON.stringify({ CustomizedCategoryID: id, CustomizedCategoryName: $('#CustomizedCategoryName').val() })
+                // console.log(jsonData)
+                $.ajax({
+                    url: url + "/" + id,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: jsonData
+                }).done(function (data) {
+                    alert("修改成功，編號為 " + id)
+                    load()
+                    clearData()
+                })
+
+            } else {
+                //資料新增
+                const jsonData = JSON.stringify({ CustomizedCategoryName: $('#CustomizedCategoryName').val() })
+                // console.log(jsonData)
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: jsonData
+                }).done(function (data) {
+                    alert("新增成功，編號為 " + data.CustomizedCategoryID)
+                    load()
+                    clearData()
+                })
+
+            }
+
+
+
+            $('#addModal').modal('hide')
+        })
+
+        //編輯
+        //先將要修改的資料寫到Modal中
+        $('#customizecategory>tbody').on('click', 'button:nth-child(1)', function () {
+            // alert('編輯')
+            const CustomizedCategoryID = $(this).parents('tr').find('td:nth-child(1)').text()
+            const CustomizedCategoryName = $(this).parents('tr').find('td:nth-child(2)').text()
+            /*const phone = $(this).parents('tr').find('td:nth-child(3)').text()*/
+
+            $('#CustomizedCategoryID').val(CustomizedCategoryID)
+            $('#CustomizedCategoryName').val(CustomizedCategoryName)
+            /*$('#Phone').val(phone)*/
+
+
+        })
+
+        //刪除
+        $('#customizecategory>tbody').on('click', 'button:nth-child(2)', function () {
+
+            const id = $(this).parents('tr').find('td:first-child').text()
+
+            $.ajax({
+                url: url + "/" + id,
+                type: 'DELETE'
+            }).done(function (data) {
+                alert("刪除成功，編號為 " + id)
+                load()
+            })
+        })
+
+
+        function clearData() {
+            $('input').val("")
+        }
+
+    </script>
+
+}

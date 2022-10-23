@@ -9,7 +9,9 @@ namespace Msit143site.Models
     {
         public Employee()
         {
+            EmployeeTerritories = new HashSet<EmployeeTerritory>();
             InverseReportsToNavigation = new HashSet<Employee>();
+            Orders = new HashSet<Order>();
         }
 
         public int EmployeeId { get; set; }
@@ -32,6 +34,8 @@ namespace Msit143site.Models
         public string PhotoPath { get; set; }
 
         public virtual Employee ReportsToNavigation { get; set; }
+        public virtual ICollection<EmployeeTerritory> EmployeeTerritories { get; set; }
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
